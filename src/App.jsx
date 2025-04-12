@@ -13,7 +13,7 @@ function App() {
               <BookOpen size={32} className="text-white" />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 text-center">
-              Ombaka Biblioteca
+              Ombaka Bíblioteca
             </h1>
           </div>
         </div>
