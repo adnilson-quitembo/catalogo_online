@@ -274,8 +274,12 @@ const BookList = () => {
           ))
         ) : (
           <div className="col-span-full p-8 text-center text-gray-500 bg-white rounded-lg">
-            Nenhum livro encontrado
-          </div>
+  <div className="flex justify-center items-center h-20">
+    <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+    
+  </div>
+  carregando os livros
+</div>
         )}
       </div>
 
