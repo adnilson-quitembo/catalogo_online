@@ -25,23 +25,33 @@ const BookList = () => {
 
   
   useEffect(() => {
-    setLoading(true);
-    api
-      .get('/livros')
-      .then((response) => {
-        setData(response.data);
-        setFilteredBooks(response.data); 
-        
-        console.log(data)// Garante que sempre haja livros na tela
-      })
-      .catch((err) => {
-        console.error('Erro ao buscar dados:', err);
-        setError('Não foi possível carregar os dados.');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    const interval = setInterval(() => {
+      console.log('🔄 Buscando dados da API...');
+      setLoading(true);
+  
+      api
+        .get('/livros')
+        .then((response) => {
+          setData(response.data);
+          setFilteredBooks(response.data);
+          console.log('✅ Dados carregados com sucesso');
+  
+          // Se os dados foram carregados com sucesso, para o intervalo
+          clearInterval(interval);
+        })
+        .catch((err) => {
+          console.error('❌ Erro ao buscar dados:', err);
+          setError('Não foi possível carregar os dados.');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, 3000); // tenta a cada 3 segundos, ou o tempo que quiser
+  
+    // limpa o intervalo caso o componente seja desmontado
+    return () => clearInterval(interval);
   }, []);
+  
 
   
   
