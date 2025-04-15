@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Search, Book, User, Hash, Pencil,Bookmark,MapPinned  } from 'lucide-react';
 import {subcategories, categories } from '../../categpria_subcategoria'
-import api from '../../api'
+import api from '../../api.js'
 import cdd from '../../cdd'
 
 
