@@ -120,7 +120,7 @@ const BookList = () => {
       }
   
   
-  const foto = 'https://00000.loca.lt/'
+  const foto = 'http://172.27.152.80:3333/'
   
 
 
