@@ -72,7 +72,7 @@ const BookList = () => {
       setSelectedCategory(category);
       setSelectedSubcategory(); // Reset subcategory when category changes
     };
-
+    
     async function handleSearch () {
       try {
         const params = {};
@@ -87,16 +87,14 @@ const BookList = () => {
         console.log("📥 Resposta da API:", response.data);
   
         if (Array.isArray(response.data)) {
-          setFilteredBooks(response.data.livros); 
-         
-          
+          setFilteredBooks(response.data); // ✅ Já é array
+        } else if (Array.isArray(response.data.livros)) {
+          setFilteredBooks(response.data.livros); // ✅ Está dentro de "livros"
         } else {
-         
-          console.warn("⚠️ Nenhum array de livros retornado.");
-          const lee = Object.values(response.data).flat()
-          setFilteredBooks(response.data.livros);
-          
+          console.warn("⚠️ Formato inesperado da resposta:", response.data);
+          setFilteredBooks([]); // Evita erros no .map
         }
+        
       } catch (error) {
         console.error("❌ Erro ao buscar livros:", error);
       }
