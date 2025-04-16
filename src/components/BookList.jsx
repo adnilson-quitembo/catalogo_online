@@ -56,7 +56,13 @@ const BookList = () => {
   }, []);
   
   
-
+  const livrosParaExibir = searchQuery
+  ? Array.isArray(filteredSearchResults) ? filteredSearchResults : []
+  : Array.isArray(filteredBooks) && filteredBooks.length > 0
+    ? filteredBooks
+    : Array.isArray(data)
+      ? data
+      : [];
   
   
   
@@ -70,7 +76,7 @@ const BookList = () => {
       String(book.ISBN).includes(String(searchQuery))
     )
   : data;
-
+  
     const handleCategoryChange = (e) => {
       const category = e.target.value;
       setSelectedCategory(category);
@@ -221,8 +227,8 @@ const BookList = () => {
 
       {/* Book Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {(searchQuery || filteredBooks.length > 0 ? (searchQuery ? filteredSearchResults : filteredBooks) : data).length > 0 ? (
-            (searchQuery ? filteredSearchResults : filteredBooks).map((book)  => (
+      {livrosParaExibir.length > 0 ? (
+  livrosParaExibir.map((book)  => (
             <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-[1.02] hover:shadow-lg">
     <div className="h-48 overflow-hidden">
       <img 
