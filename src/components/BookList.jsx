@@ -32,11 +32,15 @@ const BookList = () => {
       api
         .get('/livros')
         .then((response) => {
-          setData(response.data);
-          setFilteredBooks(response.data);
+          const raw = response.data;
+  
+          // ✅ Adaptação: força transformar em array
+          const livros = Array.isArray(raw) ? raw : raw.data;
+  
+          setData(livros);
+          setFilteredBooks(livros);
           console.log('✅ Dados carregados com sucesso');
   
-          // Se os dados foram carregados com sucesso, para o intervalo
           clearInterval(interval);
         })
         .catch((err) => {
@@ -46,11 +50,11 @@ const BookList = () => {
         .finally(() => {
           setLoading(false);
         });
-    }, 3000); // tenta a cada 3 segundos, ou o tempo que quiser
+    }, 3000);
   
-    // limpa o intervalo caso o componente seja desmontado
     return () => clearInterval(interval);
   }, []);
+  
   
 
   
