@@ -69,13 +69,13 @@ const BookList = () => {
       // 🔹 Pesquisa rápida no front-end (filtra em allBooks)
  
 
-    const filteredSearchResults = String(searchQuery).trim()
-  ? data.filter(book =>
-      String(book.TITULO_DO_LIVRO).toLowerCase().includes(String(searchQuery).toLowerCase()) ||
-      String(book.AUTOR_PRINCIPAL).toLowerCase().includes(String(searchQuery).toLowerCase()) ||
-      String(book.ISBN).includes(String(searchQuery))
-    )
-  : data;
+      const filteredSearchResults = searchQuery && Array.isArray(data)
+      ? data.filter(book =>
+          String(book.TITULO_DO_LIVRO).toLowerCase().includes(searchQuery.toLowerCase()) ||
+          String(book.AUTOR_PRINCIPAL).toLowerCase().includes(searchQuery.toLowerCase()) ||
+          String(book.ISBN).includes(searchQuery)
+        )
+      : Array.isArray(data) ? data : [];
   
     const handleCategoryChange = (e) => {
       const category = e.target.value;
@@ -224,7 +224,7 @@ const BookList = () => {
           </button>
         </div>
       </div>
-
+      
       {/* Book Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {livrosParaExibir.length > 0 ? (
