@@ -49,29 +49,42 @@ const BookList = () => {
     return () => clearInterval(interval);
   }, []);
   
+ 
   
-  const livrosParaExibir = searchQuery
-  ? Array.isArray(filteredSearchResults) ? filteredSearchResults : []
-  : Array.isArray(filteredBooks) && filteredBooks.length > 0
-    ? filteredBooks
-    : Array.isArray(data)
-      ? data
-      : [];
+ 
   
   
   
       // 🔹 Pesquisa rápida no front-end (filtra em allBooks)
  
 
-      const filteredSearchResults = searchQuery && Array.isArray(data)
-      ? data.filter(book =>
-          String(book.TITULO_DO_LIVRO).toLowerCase().includes(searchQuery.toLowerCase()) ||
-          String(book.AUTOR_PRINCIPAL).toLowerCase().includes(searchQuery.toLowerCase()) ||
-          String(book.ISBN).includes(searchQuery)
-        )
-      : Array.isArray(data) ? data : [];
+      const filteredSearchResults = useMemo(() => {
+        if (!searchQuery || !Array.isArray(data)) return [];
+        
+        return data.filter(book =>
+          String(book.TITULO_DO_LIVRO || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+          String(book.AUTOR_PRINCIPAL || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+          String(book.ISBN || '').includes(searchQuery)
+        );
+      }, [searchQuery, data]);
   
-    const handleCategoryChange = (e) => {
+   
+      const livrosParaExibir = searchQuery
+      ? Array.isArray(filteredSearchResults) ? filteredSearchResults : []
+      : Array.isArray(filteredBooks) && filteredBooks.length > 0
+        ? filteredBooks
+        : Array.isArray(data)
+          ? data
+          : [];
+   
+   
+   
+   
+   
+   
+   
+   
+     const handleCategoryChange = (e) => {
       const category = e.target.value;
       setSelectedCategory(category);
       setSelectedSubcategory(); // Reset subcategory when category changes
@@ -132,7 +145,7 @@ const BookList = () => {
       }
   
   
-  const foto = 'http://172.27.152.80:3333/'
+  const foto = '/api'
   
 
 
@@ -193,7 +206,7 @@ const BookList = () => {
         <div className="flex gap-2 md:col-span-2 lg:col-span-1">
           <select
             value={selectedCourse}
-            onChange={(e) => setSelectedValue( e.target.value )}
+            onChange={(e) => setSelectedCourse(e.target.value)}  // Usar setSelectedCourse em vez de setSelectedValue
             className="flex-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
           >
             <option value="">Cursos</option>
