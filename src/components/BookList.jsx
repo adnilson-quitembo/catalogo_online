@@ -32,15 +32,9 @@ const BookList = () => {
       api
         .get('/livros')
         .then((response) => {
-          const raw = response.data;
-  
-          // ✅ Adaptação: força transformar em array
-          const livros = Array.isArray(raw) ? raw : raw.data;
-  
-          setData(livros);
-          setFilteredBooks(livros);
-          console.log('✅ Dados carregados com sucesso');
-  
+          console.log("✅ Dados recebidos:", response.data); // Verifique os dados aqui
+          setData(response.data);
+          setFilteredBooks(response.data);
           clearInterval(interval);
         })
         .catch((err) => {
